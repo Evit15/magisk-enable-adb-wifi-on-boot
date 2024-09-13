@@ -32,3 +32,4 @@ jobs:
         artifactContentType: 'application/zip'
         allowUpdates: true
         name: "v${{env.CURRENT_VERSION}}"
+        tag: "v${{env.CURRENT_VERSION}}"
