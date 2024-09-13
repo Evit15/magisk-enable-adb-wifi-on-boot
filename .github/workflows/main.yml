@@ -31,3 +31,4 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         artifactContentType: 'application/zip'
         allowUpdates: true
+        name: "v${{env.CURRENT_VERSION}}"
