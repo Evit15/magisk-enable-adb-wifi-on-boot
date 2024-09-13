@@ -17,6 +17,7 @@ jobs:
         version-file: module.prop
         version-file-extraction-pattern: '(?<=version=v).+'
         release-version-generate-build-metadata: true
+        release-version-build-metadata-datetime: 'yyyy-MM-dd-HH-mm-ss'
     
     - name: test version
       run: |
