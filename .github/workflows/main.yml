@@ -15,7 +15,7 @@ jobs:
       with:
         version-source: file
         version-file: module.prop
-        version-file-extraction-pattern: '(?<=version=).+'
+        version-file-extraction-pattern: '(?<=version=v).+'
         release-version-generate-build-metadata: true
     
     - name: test version
