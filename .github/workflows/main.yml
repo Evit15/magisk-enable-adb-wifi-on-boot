@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Generate versions
       uses: HardNorth/github-version-generate@v1.4.0
       with:
@@ -17,24 +17,17 @@ jobs:
         version-file: module.prop
         version-file-extraction-pattern: '(?<=version=v).+'
     
-    - name: Set version
-      run: |
-        datestr=$(date '+%Y%m%d%H%M%S')
-        echo "NEWVERSION=${{ env.CURRENT_VERSION }}.$datestr" >> $GITHUB_ENV
-    
-    - name: Get version
-      run: |
-        echo Build with version ${{ env.NEWVERSION }}
-    
     - name: Archive Release
       uses: thedoctor0/zip-release@0.7.5
       with:
         type: 'zip'
-        filename: '${{ github.event.repository.name }}-${{env.NEWVERSION}}.zip'
+        filename: '${{ github.event.repository.name }}-${{env.CURRENT_VERSION}}.zip'
         exclusions: '*.git* *.github*'
         
     - name: Upload Release
-      uses: ncipollo/release-action@v1.12.0
+      uses: ncipollo/release-action@v1
       with:
-        artifacts: "${{ github.event.repository.name }}-${{env.NEWVERSION}}.zip"
+        artifacts: "${{ github.event.repository.name }}-${{env.CURRENT_VERSION}}.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
+        artifactContentType: 'application/zip'
+        allowUpdates: true
