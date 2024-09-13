@@ -16,12 +16,20 @@ jobs:
         version-source: file
         version-file: module.prop
         version-file-extraction-pattern: '(?<=version=v).+'
-        release-version-generate-build-metadata: true
-        release-version-build-metadata-datetime: 'yyyy-MM-dd-HH-mm-ss'
     
-    - name: test version
+    - name: Set version
       run: |
-        echo ${{ env.RELEASE_VERSION }}
-        echo ${{ env.RELEASE_VERSION }}
-        echo ${{ env.RELEASE_VERSION }}
-        echo ${{ env.RELEASE_VERSION }}
+        datestr=$(date '+%Y%m%d%H%M%S')
+        echo "NEWVERSION=${{ env.CURRENT_VERSION }}.$datestr" >> $GITHUB_ENV
+    
+    - name: Get version
+      run: |
+        echo Build with version ${{ env.NEWVERSION }}
+    
+    - name: Archive Release
+      uses: thedoctor0/zip-release@0.7.5
+      with:
+        type: 'zip'
+        filename: '${{ github.event.repository.name }}-${{env.NEWVERSION}}.zip'
+        exclusions: '*.git* *.github*'
+        
