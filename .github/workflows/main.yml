@@ -33,3 +33,8 @@ jobs:
         filename: '${{ github.event.repository.name }}-${{env.NEWVERSION}}.zip'
         exclusions: '*.git* *.github*'
         
+    - name: Upload Release
+      uses: ncipollo/release-action@v1.12.0
+      with:
+        artifacts: "${{ github.event.repository.name }}-${{env.NEWVERSION}}.zip"
+        token: ${{ secrets.GITHUB_TOKEN }}
